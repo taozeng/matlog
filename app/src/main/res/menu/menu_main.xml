@@ -52,12 +52,6 @@
                 android:title="@string/menu_title_partial_select" />
 
             <item
-                android:id="@+id/menu_record_log"
-                android:alphabeticShortcut="@string/start_recording_log"
-                android:icon="@drawable/ic_record_white_24dp"
-                android:title="@string/start_recording_log" />
-
-            <item
                 android:id="@+id/menu_save_as_log"
                 android:alphabeticShortcut="@string/save_as"
                 android:icon="@drawable/ic_save_white_24dp"
@@ -70,6 +64,12 @@
                 android:title="@string/manage_saved_logs" />
         </menu>
     </item>
+
+    <item
+        android:id="@+id/menu_record_log"
+        android:alphabeticShortcut="@string/start_recording_log"
+        android:icon="@drawable/ic_record_white_24dp"
+        android:title="@string/start_recording_log" />
 
     <item
         android:id="@+id/menu_log_level"
