@@ -196,10 +196,11 @@ public class LogcatRecordingService extends IntentService {
             int lineCount = 0;
             int logLinePeriod = PreferenceHelper.getLogLinePeriodPreference(this);
             String filterPattern = PreferenceHelper.getFilterPatternPreference(this);
+            boolean isNothingFilteredOut = filterPattern.isEmpty();
             while (mReader != null && (line = mReader.readLine()) != null && !mKilled) {
 
                 // filter
-                if (!searchCriteriaWillAlwaysMatch || !logLevelAcceptsEverything) {
+                if (!searchCriteriaWillAlwaysMatch || !logLevelAcceptsEverything || !isNothingFilteredOut) {
                     if (!checkLogLine(line, searchCriteria, logLevelLimit, filterPattern)) {
                         continue;
                     }
@@ -232,8 +233,8 @@ public class LogcatRecordingService extends IntentService {
 
     private boolean checkLogLine(String line, SearchCriteria searchCriteria, int logLevelLimit, String filterPattern) {
         LogLine logLine = LogLine.newLogLine(line, false, filterPattern);
-        return searchCriteria.matches(logLine)
-                && LogLineAdapterUtil.logLevelIsAcceptableGivenLogLevelLimit(logLine.getLogLevel(), logLevelLimit);
+        return !logLine.isFilterOutTagsMatched() && searchCriteria.matches(logLine)
+               && LogLineAdapterUtil.logLevelIsAcceptableGivenLogLevelLimit(logLine.getLogLevel(), logLevelLimit);
     }
 
 

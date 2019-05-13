@@ -18,7 +18,7 @@ public class LogLine {
     private static Pattern logPattern = Pattern.compile(
             // log level
             "(\\w)" +
-                    "/" +
+                    "\\/" +
                     // tag
                     "([^(]+)" +
                     "\\(\\s*" +
@@ -37,7 +37,7 @@ public class LogLine {
     private String timestamp;
     private boolean expanded = false;
     private boolean highlighted = false;
-
+    private boolean filterOutTagsMatched = false;
     public static boolean isScrubberEnabled = false;
 
     public static LogLine newLogLine(String originalLine, boolean expanded, String filterPattern) {
@@ -71,6 +71,7 @@ public class LogLine {
 
             String tagText = matcher.group(2);
             if (tagText.matches(filterPattern)) {
+                logLine.setFilterOutTagsMatched(true);
                 logLine.setLogLevel(convertCharToLogLevel('V'));
             }
 
@@ -212,5 +213,13 @@ public class LogLine {
 
     public void setHighlighted(boolean highlighted) {
         this.highlighted = highlighted;
+    }
+
+    public void setFilterOutTagsMatched(boolean matched) {
+        filterOutTagsMatched = matched;
+    }
+
+    public boolean isFilterOutTagsMatched() {
+        return filterOutTagsMatched;
     }
 }

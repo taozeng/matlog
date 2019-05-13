@@ -386,7 +386,7 @@ public class LogLineAdapter extends RecyclerView.Adapter<LogLineViewHolder> impl
             }
 
             for (LogLine logLine : logLines) {
-                if (logLine != null &&
+                if (logLine != null && !logLine.isFilterOutTagsMatched() &&
                         LogLineAdapterUtil.logLevelIsAcceptableGivenLogLevelLimit(logLine.getLogLevel(), logLevelLimit)) {
                     allValues.add(logLine);
                 }
